@@ -1,0 +1,3 @@
+# Raw dataset directory
+# Downloaded raw CSV data from Kaggle is stored or symlinked/referenced here.
+# Note: Raw data CSV files are gitignored.

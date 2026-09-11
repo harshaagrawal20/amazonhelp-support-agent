@@ -1,0 +1,214 @@
+{
+  "n": 200,
+  "mean_overall_score": 4.746,
+  "median_overall_score": 5.0,
+  "overall_score_std": 0.479,
+  "decisions": {
+    "pass_count": 176,
+    "borderline_count": 22,
+    "fail_count": 2,
+    "pass_rate": 0.88,
+    "borderline_rate": 0.11,
+    "fail_rate": 0.01
+  },
+  "dimension_statistics": {
+    "correctness": {
+      "mean": 4.595,
+      "median": 5.0,
+      "std": 0.863,
+      "min": 1.0,
+      "max": 5.0
+    },
+    "relevance": {
+      "mean": 4.8,
+      "median": 5.0,
+      "std": 0.593,
+      "min": 2.0,
+      "max": 5.0
+    },
+    "historical_grounding": {
+      "mean": 4.865,
+      "median": 5.0,
+      "std": 0.445,
+      "min": 1.0,
+      "max": 5.0
+    },
+    "helpfulness": {
+      "mean": 4.59,
+      "median": 5.0,
+      "std": 0.689,
+      "min": 2.0,
+      "max": 5.0
+    },
+    "unsupported_claims": {
+      "mean": 4.93,
+      "median": 5.0,
+      "std": 0.476,
+      "min": 1.0,
+      "max": 5.0
+    },
+    "escalation_appropriateness": {
+      "mean": 4.7,
+      "median": 5.0,
+      "std": 0.833,
+      "min": 2.0,
+      "max": 5.0
+    }
+  },
+  "score_distribution": {
+    "score_5": 148,
+    "score_4_to_4_79": 37,
+    "score_3_to_3_99": 13,
+    "score_below_3": 2
+  },
+  "by_gold_escalation": {
+    "auto_handle": {
+      "count": 96,
+      "mean_overall": 4.715,
+      "median_overall": 5.0,
+      "pass_rate": 0.896,
+      "fail_rate": 0.021
+    },
+    "escalate": {
+      "count": 98,
+      "mean_overall": 4.768,
+      "median_overall": 5.0,
+      "pass_rate": 0.857,
+      "fail_rate": 0.0
+    },
+    "unclear": {
+      "count": 5,
+      "mean_overall": 4.9,
+      "median_overall": 5.0,
+      "pass_rate": 1.0,
+      "fail_rate": 0.0
+    }
+  },
+  "by_gold_intent": {
+    "account_access_security": {
+      "count": 14,
+      "mean_overall": 4.976,
+      "pass_count": 14,
+      "pass_rate": 1.0
+    },
+    "damaged_defective_wrong_item": {
+      "count": 15,
+      "mean_overall": 4.955,
+      "pass_count": 15,
+      "pass_rate": 1.0
+    },
+    "delivery_status_tracking": {
+      "count": 46,
+      "mean_overall": 4.735,
+      "pass_count": 38,
+      "pass_rate": 0.826
+    },
+    "feedback_complaint_chatter": {
+      "count": 33,
+      "mean_overall": 4.742,
+      "pass_count": 29,
+      "pass_rate": 0.879
+    },
+    "order_cancellation_modification": {
+      "count": 9,
+      "mean_overall": 4.648,
+      "pass_count": 7,
+      "pass_rate": 0.778
+    },
+    "other_unclear": {
+      "count": 10,
+      "mean_overall": 4.517,
+      "pass_count": 8,
+      "pass_rate": 0.8
+    },
+    "payment_billing_promotions": {
+      "count": 23,
+      "mean_overall": 4.623,
+      "pass_count": 19,
+      "pass_rate": 0.826
+    },
+    "prime_digital_services": {
+      "count": 21,
+      "mean_overall": 4.706,
+      "pass_count": 19,
+      "pass_rate": 0.905
+    },
+    "product_seller_inquiry": {
+      "count": 10,
+      "mean_overall": 4.766,
+      "pass_count": 9,
+      "pass_rate": 0.9
+    },
+    "return_refund_exchange": {
+      "count": 19,
+      "mean_overall": 4.798,
+      "pass_count": 18,
+      "pass_rate": 0.947
+    }
+  },
+  "by_retrieval_presence": {
+    "with_retrieval_evidence": {
+      "count": 177,
+      "mean_overall": 4.738,
+      "median_overall": 5.0,
+      "pass_count": 154,
+      "pass_rate": 0.87,
+      "fail_rate": 0.011
+    },
+    "without_retrieval_evidence": {
+      "count": 23,
+      "mean_overall": 4.811,
+      "median_overall": 5.0,
+      "pass_count": 22,
+      "pass_rate": 0.957,
+      "fail_rate": 0.0
+    }
+  },
+  "judge_model": "openai/gpt-oss-20b (resumed with gpt-oss-120b foundation)",
+  "judge_provider": "groq",
+  "rubric_version": "v1.0",
+  "dimension_distributions": {
+    "correctness": {
+      "score_5": 156,
+      "score_4": 19,
+      "score_3": 14,
+      "score_2": 10,
+      "score_1": 1
+    },
+    "relevance": {
+      "score_5": 175,
+      "score_4": 14,
+      "score_3": 7,
+      "score_2": 4,
+      "score_1": 0
+    },
+    "historical_grounding": {
+      "score_5": 178,
+      "score_4": 19,
+      "score_3": 2,
+      "score_2": 0,
+      "score_1": 1
+    },
+    "helpfulness": {
+      "score_5": 137,
+      "score_4": 48,
+      "score_3": 11,
+      "score_2": 4,
+      "score_1": 0
+    },
+    "unsupported_claims": {
+      "score_5": 195,
+      "score_4": 1,
+      "score_3": 1,
+      "score_2": 1,
+      "score_1": 2
+    },
+    "escalation_appropriateness": {
+      "score_5": 174,
+      "score_4": 6,
+      "score_3": 6,
+      "score_2": 14,
+      "score_1": 0
+    }
+  }
+}

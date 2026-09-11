@@ -1,0 +1,22 @@
+# Core Data Processing
+pandas>=2.2.0
+numpy>=1.26.0
+
+# Dataset Download
+kagglehub>=0.2.0
+
+# Environment and Config
+python-dotenv>=1.0.0
+
+# Testing
+pytest>=8.0.0
+
+# Machine Learning & NLP
+scikit-learn>=1.4.0
+
+# Future dependencies (commented out until needed in future phases)
+# groq>=0.9.0
+# sentence-transformers>=2.5.0
+# faiss-cpu>=1.7.4
+# matplotlib>=3.8.0
+

@@ -1,0 +1,11 @@
+,pred_delivery_status_tracking,pred_return_refund_exchange,pred_damaged_defective_wrong_item,pred_order_cancellation_modification,pred_payment_billing_promotions,pred_prime_digital_services,pred_account_access_security,pred_product_seller_inquiry,pred_feedback_complaint_chatter,pred_other_unclear
+true_delivery_status_tracking,3279,0,1,0,1,12,0,0,23,330
+true_return_refund_exchange,64,624,0,0,16,5,1,1,21,115
+true_damaged_defective_wrong_item,27,26,304,5,5,3,1,0,10,58
+true_order_cancellation_modification,29,9,0,275,4,5,2,0,5,50
+true_payment_billing_promotions,51,0,0,0,512,7,5,2,16,190
+true_prime_digital_services,7,0,0,0,2,485,0,0,19,237
+true_account_access_security,0,0,0,0,1,2,75,1,9,57
+true_product_seller_inquiry,10,0,1,0,0,0,0,48,10,49
+true_feedback_complaint_chatter,23,1,1,0,1,1,0,0,802,141
+true_other_unclear,33,1,2,0,3,2,1,0,3,4256

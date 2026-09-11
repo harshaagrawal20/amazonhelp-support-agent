@@ -1,0 +1,1224 @@
+{
+  "metadata": {
+    "timestamp": "2026-09-09T17:40:28Z",
+    "total_runtime_seconds": 73.1,
+    "input_representation": "current_customer_message_cleaned",
+    "vectorizer": "TfidfVectorizer(ngram_range=(1,2), min_df=2, max_features=25000, sublinear_tf=True)",
+    "classifier": "LogisticRegression(C=1.0, max_iter=500, random_state=42)",
+    "warning": "Weak / development labels used. Benchmarks establish baseline feasibility prior to human gold-standard evaluation."
+  },
+  "taxonomy": {
+    "delivery_status_tracking": {
+      "name": "delivery_status_tracking",
+      "display_name": "Delivery Status & Tracking",
+      "department": "Logistics & Transportation (AMZL / Carriers)",
+      "description": "Customer inquiring about the whereabouts, dispatch status, estimated arrival date/time, courier transit issues, carrier delays, or tracking updates of an order.",
+      "inclusion_criteria": "Mentions of shipping, dispatch, tracking number, courier/carrier (AMZL, UPS, Hermes, etc.), delivery delays, package not arrived, ETA inquiries, or out-for-delivery status.",
+      "exclusion_criteria": "Reports of physically damaged, broken, or empty boxes (classified as damaged_defective_wrong_item). Requests to cancel an in-transit order (classified as order_cancellation_modification).",
+      "likely_confusions": [
+        "damaged_defective_wrong_item (when customer mentions 'package arrived broken')",
+        "order_cancellation_modification (when customer wants to cancel because of a delay)",
+        "return_refund_exchange (when customer asks for refund due to late delivery)"
+      ],
+      "representative_examples": [
+        "why is my order at my local courier for the last 6 days and still hasn’t been delivered to me??",
+        "Item has not been delivered but tracking says it was handed to me over an hour ago...",
+        "What's with the shipping? I order something on Saturday, and it's not arriving until Wednesday?",
+        "発送された商品の追跡番号を教えてください。",
+        "Mon colis devait arriver aujourd'hui mais je n'ai toujours rien reçu."
+      ]
+    },
+    "return_refund_exchange": {
+      "name": "return_refund_exchange",
+      "display_name": "Returns, Refunds & Exchanges",
+      "department": "Returns & Reverse Logistics",
+      "description": "Customer requesting to return an eligible item, check refund processing status, obtain a prepaid return label, or request an exchange/reimbursement.",
+      "inclusion_criteria": "Explicit requests for return labels, refund status, money back, returning goods, product exchange, or reimbursement for return shipping costs.",
+      "exclusion_criteria": "First-time reports of defective/damaged items without explicit return/refund request (classified as damaged_defective_wrong_item). Payment gateway errors or unexpected bank charges (classified as payment_billing_promotions).",
+      "likely_confusions": [
+        "damaged_defective_wrong_item (when customer says 'it arrived broken, I want a refund')",
+        "payment_billing_promotions (when customer asks where their refund credit is)"
+      ],
+      "representative_examples": [
+        "I called customer service and was told my membership wouldn't be renewed. How do I get a refund?",
+        "Can I get a return shipping label? The item is still unopened.",
+        "I dropped off my return package at Hermes 5 days ago, when will my refund be issued?",
+        "返品の仕方を教えてください。返金はいつ頃になりますか？",
+        "Je souhaite retourner cet article et être remboursé au plus vite."
+      ]
+    },
+    "damaged_defective_wrong_item": {
+      "name": "damaged_defective_wrong_item",
+      "display_name": "Damaged, Defective or Wrong Item",
+      "department": "Product Quality & Replacement",
+      "description": "Customer reporting that an item arrived broken, scratched, defective, non-functional, missing parts, inside an empty/opened box, or completely different from what was ordered.",
+      "inclusion_criteria": "Physical damage, defective electronics, missing pieces, shattered/scratched goods, fake/counterfeit goods, or wrong item/variant received.",
+      "exclusion_criteria": "Late deliveries where the package is intact (classified as delivery_status_tracking). Digital content playback errors (classified as prime_digital_services).",
+      "likely_confusions": [
+        "delivery_status_tracking (when package is damaged by the courier in transit)",
+        "return_refund_exchange (when customer explicitly demands return rather than describing defect)"
+      ],
+      "representative_examples": [
+        "my package was ‘accidentally’ opened.. 4 items missing worth £97. You need better delivery drivers!!",
+        "The screen on the monitor I received is cracked and shattered completely.",
+        "I ordered size 10 shoes and you sent me size 7. This is the wrong product.",
+        "届いた商品の箱が潰れていて中身が破損していました。交換できますか？",
+        "Ihr Flaschen! Erst habt ihr mir ein Paket mit falschem Inhalt geschickt..."
+      ]
+    },
+    "order_cancellation_modification": {
+      "name": "order_cancellation_modification",
+      "display_name": "Order Cancellation & Modification",
+      "department": "Order Management & Fulfillment",
+      "description": "Customer seeking to cancel an existing order, stop an accidental purchase, or modify order details such as shipping address or payment method before dispatch.",
+      "inclusion_criteria": "Phrases like cancel my order, stop order, change delivery address, cancel accidentally placed order, or cancel subscription order.",
+      "exclusion_criteria": "Canceling an account or deleting user profile (classified as account_access_security). Canceling a Prime subscription (classified as prime_digital_services).",
+      "likely_confusions": [
+        "prime_digital_services (when canceling Prime membership specifically)",
+        "delivery_status_tracking (when canceling because delivery is taking too long)"
+      ],
+      "representative_examples": [
+        "Please cancel order # 123-4567890-1234567 I bought it by accident.",
+        "Can I change the delivery address for my order? It hasn't shipped yet.",
+        "I tried to cancel my order online but the button is greyed out. Help please!",
+        "注文をキャンセルしたいのですが、まだ間に合いますか？",
+        "Pouvez-vous annuler ma commande passée ce matin par erreur ?"
+      ]
+    },
+    "payment_billing_promotions": {
+      "name": "payment_billing_promotions",
+      "display_name": "Payment, Billing & Promotions",
+      "department": "Billing & Payments Support",
+      "description": "Customer experiencing payment transaction errors, unexpected or duplicate charges, gift card balance or redemption issues, promo code failures, or invoice requests.",
+      "inclusion_criteria": "Mentions of credit/debit cards, bank deductions, unauthorized charges, double billing, gift cards, vouchers, promo/discount codes, invoices, or payment gateway failures.",
+      "exclusion_criteria": "Recurring Prime subscription membership fees (classified as prime_digital_services unless purely disputing an unrecognized charge). Pure refund requests for returned items (return_refund_exchange).",
+      "likely_confusions": [
+        "prime_digital_services (when customer complains about Prime renewal fee)",
+        "return_refund_exchange (when customer asks where their refund credit is)"
+      ],
+      "representative_examples": [
+        "where can I chat with a support member for a false charge?",
+        "when do you guys charge for the Xbox one X I preordered? It ships the 6th.",
+        "My gift card code says it is already redeemed, but my balance is still zero.",
+        "promotion code doesn’t work on checkout",
+        "Amazonさんから支払い番号がこないんだが…"
+      ]
+    },
+    "prime_digital_services": {
+      "name": "prime_digital_services",
+      "display_name": "Prime & Digital Services",
+      "department": "Digital Devices & Subscriptions (Prime, Kindle, Fire TV, Echo/Alexa)",
+      "description": "Customer having questions or technical issues with Amazon Prime benefits, Prime Video streaming, Kindle e-readers/ebooks, Fire TV hardware/apps, Echo/Alexa devices, or Amazon Music.",
+      "inclusion_criteria": "Prime Video playback/buffering errors, Fire TV app crashes, Kindle syncing/page numbers, Alexa voice commands, Prime membership benefits questions, or Amazon Music subscriptions.",
+      "exclusion_criteria": "General retail order deliveries even if placed with Prime shipping (classified as delivery_status_tracking). Physical damage to retail items (classified as damaged_defective_wrong_item).",
+      "likely_confusions": [
+        "delivery_status_tracking (when customer complains Prime 2-day delivery was slow)",
+        "payment_billing_promotions (when customer asks about Prime membership price)"
+      ],
+      "representative_examples": [
+        "also, beim Addams Family-Film in Prime sind Bild und Ton nicht wirklich synchron. Wie kommt's?",
+        "I'm watching SUITS on firetv. Whenever I play SUITS, it always go to SE03EP01 by default",
+        "you need to notify new users that the page numbers do not match up with the paper copies on Kindle.",
+        "amazonのfireTVstickが見れない😢",
+        "amazonプライムビデオ、再生エラーが多いです"
+      ]
+    },
+    "account_access_security": {
+      "name": "account_access_security",
+      "display_name": "Account Access & Security",
+      "department": "Customer Trust, Identity & Account Security",
+      "description": "Customer unable to log into their account, locked out, encountering OTP/2FA errors, suspecting account compromise or hacking, or requesting account closure.",
+      "inclusion_criteria": "Password reset failures, OTP not received, 2FA issues, suspended or blocked accounts, unauthorized account activity / hacked reports, or closing/deleting account.",
+      "exclusion_criteria": "Credit card fraud reports without account compromise (payment_billing_promotions). Simple address book changes within an active account (order_cancellation_modification).",
+      "likely_confusions": [
+        "payment_billing_promotions (when customer suspects a charge was made by a hacker)",
+        "feedback_complaint_chatter (when customer vents about being blocked without giving details)"
+      ],
+      "representative_examples": [
+        "I want my amazon payments account CLOSED. dm me please.",
+        "Bought an Echo Show and it won’t recognize a single account in our household.",
+        "Why would Amazon hack my account? Some employee must have been in there hacking people.",
+        "Bonjour, mon compte Amazon est bloque suite a une commande, toujours rien après 24h.",
+        "パスワードを再設定しようとしても確認メールが届きません。"
+      ]
+    },
+    "product_seller_inquiry": {
+      "name": "product_seller_inquiry",
+      "display_name": "Product & Seller Inquiry",
+      "department": "Retail & Marketplace Operations",
+      "description": "Customer or merchant asking about product availability/stock, specifications, warranty, third-party seller policies, price matching, or selling items on Amazon.",
+      "inclusion_criteria": "Stock restock dates, product compatibility, seller authenticity/marketplace questions, how to sell on Amazon, or general pre-purchase questions.",
+      "exclusion_criteria": "Post-purchase damaged goods (damaged_defective_wrong_item). Inquiries about orders already placed (delivery_status_tracking or return_refund_exchange).",
+      "likely_confusions": [
+        "damaged_defective_wrong_item (when inquiring about counterfeit vs receiving counterfeit)",
+        "other_unclear (when question is extremely generic like 'how do I buy?')"
+      ],
+      "representative_examples": [
+        "I want to sell globally on Amazon. Where do I register as a seller?",
+        "When will the Nintendo Switch be back in stock on Amazon?",
+        "Are items sold by third-party sellers covered by the A-to-Z guarantee?",
+        "Amazonとかで物買ったことある人いますか？いたら買い方教えてほしいです",
+        "Ce produit est-il compatible avec les ordinateurs sous Windows 10 ?"
+      ]
+    },
+    "feedback_complaint_chatter": {
+      "name": "feedback_complaint_chatter",
+      "display_name": "Feedback, Complaints & Social Chatter",
+      "department": "Social Media Engagement & Executive Relations",
+      "description": "Customer expressing generic brand sentiment, dissatisfaction, compliments, gratitude, social media banter (e.g. pets playing in Amazon boxes), promotional quiz contests, or broad feedback.",
+      "inclusion_criteria": "Generic rants ('worst customer service ever!'), praise ('thank you for your help!'), social memes, box photos, app quiz inquiries (#AmazonAppQuiz), or general opinions without transactional issue.",
+      "exclusion_criteria": "Actionable reports with order numbers, tracking issues, or refund requests (routed to respective operational intent). Empty or uninterpretable single-word noise (classified as other_unclear).",
+      "likely_confusions": [
+        "other_unclear (distinction between generic sentiment vs complete lack of context)",
+        "account_access_security (when venting about account block without account details)"
+      ],
+      "representative_examples": [
+        "thank you for your help. Got my thing done within a day. really appreciate it 👍",
+        "AMAZON IS THE WORST COMPANY EVER, UNTRAINED AGENTS AND USELESS CHATBOTS!",
+        "Au lieu de jeter un carton il vaut mieux adopter un ou deux chats ! C’est bien plus utile !",
+        "#OnePlus5TAppQuiz @AmazonHelp where is a OnePlus5t winner list",
+        "Geil!!! xD Danke womit habe ich diese Ehre verdient? 😂"
+      ]
+    },
+    "other_unclear": {
+      "name": "other_unclear",
+      "display_name": "Other / Unclear / Context-Dependent",
+      "department": "Front-Line Triage",
+      "description": "Inbound messages that lack sufficient information to determine intent without further context, such as greetings, isolated follow-up fragments ('yes', 'DM sent', '__email__'), or uninterpretable noise.",
+      "inclusion_criteria": "Isolated greetings ('hi', 'need help'), isolated email addresses or phone numbers, fragmented replies in multi-turn threads, or unclassifiable queries.",
+      "exclusion_criteria": "Any query containing unambiguous keywords matching the 9 operational intents above.",
+      "likely_confusions": [
+        "feedback_complaint_chatter (when message is a vague complaint vs purely unclear)"
+      ],
+      "representative_examples": [
+        "hi I need Help",
+        "__email__",
+        "Yes, I already replied to your DM.",
+        "Please check",
+        "ok"
+      ]
+    }
+  },
+  "distributions": {
+    "train": {
+      "total_examples": 57760,
+      "distribution": {
+        "delivery_status_tracking": {
+          "count": 17040,
+          "percentage": 29.5
+        },
+        "return_refund_exchange": {
+          "count": 3742,
+          "percentage": 6.48
+        },
+        "damaged_defective_wrong_item": {
+          "count": 1863,
+          "percentage": 3.23
+        },
+        "order_cancellation_modification": {
+          "count": 1829,
+          "percentage": 3.17
+        },
+        "payment_billing_promotions": {
+          "count": 3526,
+          "percentage": 6.1
+        },
+        "prime_digital_services": {
+          "count": 3783,
+          "percentage": 6.55
+        },
+        "account_access_security": {
+          "count": 784,
+          "percentage": 1.36
+        },
+        "product_seller_inquiry": {
+          "count": 530,
+          "percentage": 0.92
+        },
+        "feedback_complaint_chatter": {
+          "count": 4387,
+          "percentage": 7.6
+        },
+        "other_unclear": {
+          "count": 20276,
+          "percentage": 35.1
+        }
+      },
+      "unclassified_or_unclear_count": 20276,
+      "unclassified_or_unclear_percentage": 35.1
+    },
+    "validation": {
+      "total_examples": 12377,
+      "distribution": {
+        "delivery_status_tracking": {
+          "count": 3720,
+          "percentage": 30.06
+        },
+        "return_refund_exchange": {
+          "count": 791,
+          "percentage": 6.39
+        },
+        "damaged_defective_wrong_item": {
+          "count": 387,
+          "percentage": 3.13
+        },
+        "order_cancellation_modification": {
+          "count": 406,
+          "percentage": 3.28
+        },
+        "payment_billing_promotions": {
+          "count": 760,
+          "percentage": 6.14
+        },
+        "prime_digital_services": {
+          "count": 717,
+          "percentage": 5.79
+        },
+        "account_access_security": {
+          "count": 178,
+          "percentage": 1.44
+        },
+        "product_seller_inquiry": {
+          "count": 110,
+          "percentage": 0.89
+        },
+        "feedback_complaint_chatter": {
+          "count": 949,
+          "percentage": 7.67
+        },
+        "other_unclear": {
+          "count": 4359,
+          "percentage": 35.22
+        }
+      },
+      "unclassified_or_unclear_count": 4359,
+      "unclassified_or_unclear_percentage": 35.22
+    },
+    "test": {
+      "total_examples": 12378,
+      "distribution": {
+        "delivery_status_tracking": {
+          "count": 3646,
+          "percentage": 29.46
+        },
+        "return_refund_exchange": {
+          "count": 847,
+          "percentage": 6.84
+        },
+        "damaged_defective_wrong_item": {
+          "count": 439,
+          "percentage": 3.55
+        },
+        "order_cancellation_modification": {
+          "count": 379,
+          "percentage": 3.06
+        },
+        "payment_billing_promotions": {
+          "count": 783,
+          "percentage": 6.33
+        },
+        "prime_digital_services": {
+          "count": 750,
+          "percentage": 6.06
+        },
+        "account_access_security": {
+          "count": 145,
+          "percentage": 1.17
+        },
+        "product_seller_inquiry": {
+          "count": 118,
+          "percentage": 0.95
+        },
+        "feedback_complaint_chatter": {
+          "count": 970,
+          "percentage": 7.84
+        },
+        "other_unclear": {
+          "count": 4301,
+          "percentage": 34.75
+        }
+      },
+      "unclassified_or_unclear_count": 4301,
+      "unclassified_or_unclear_percentage": 34.75
+    }
+  },
+  "baseline_comparison": [
+    {
+      "model": "Majority Class Baseline",
+      "val_accuracy": 0.3522,
+      "val_macro_f1": 0.0521,
+      "val_weighted_f1": 0.1835,
+      "test_accuracy": 0.3475,
+      "test_macro_f1": 0.0516,
+      "test_weighted_f1": 0.1792
+    },
+    {
+      "model": "TF-IDF + Logistic Regression",
+      "val_accuracy": 0.8581,
+      "val_macro_f1": 0.7743,
+      "val_weighted_f1": 0.8535,
+      "test_accuracy": 0.8612,
+      "test_macro_f1": 0.786,
+      "test_weighted_f1": 0.8573
+    }
+  ],
+  "majority_class_model": {
+    "majority_class": "other_unclear",
+    "validation_metrics": {
+      "accuracy": 0.3522,
+      "macro_f1": 0.0521,
+      "weighted_f1": 0.1835,
+      "per_class": {
+        "delivery_status_tracking": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 3720
+        },
+        "return_refund_exchange": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 791
+        },
+        "damaged_defective_wrong_item": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 387
+        },
+        "order_cancellation_modification": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 406
+        },
+        "payment_billing_promotions": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 760
+        },
+        "prime_digital_services": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 717
+        },
+        "account_access_security": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 178
+        },
+        "product_seller_inquiry": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 110
+        },
+        "feedback_complaint_chatter": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 949
+        },
+        "other_unclear": {
+          "precision": 0.3522,
+          "recall": 1.0,
+          "f1": 0.5209,
+          "support": 4359
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3720
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          791
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          387
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          406
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          760
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          717
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          178
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          110
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          949
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4359
+        ]
+      ]
+    },
+    "test_metrics": {
+      "accuracy": 0.3475,
+      "macro_f1": 0.0516,
+      "weighted_f1": 0.1792,
+      "per_class": {
+        "delivery_status_tracking": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 3646
+        },
+        "return_refund_exchange": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 847
+        },
+        "damaged_defective_wrong_item": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 439
+        },
+        "order_cancellation_modification": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 379
+        },
+        "payment_billing_promotions": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 783
+        },
+        "prime_digital_services": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 750
+        },
+        "account_access_security": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 145
+        },
+        "product_seller_inquiry": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 118
+        },
+        "feedback_complaint_chatter": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 970
+        },
+        "other_unclear": {
+          "precision": 0.3475,
+          "recall": 1.0,
+          "f1": 0.5157,
+          "support": 4301
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3646
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          847
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          439
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          379
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          783
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          750
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          145
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          118
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          970
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4301
+        ]
+      ]
+    }
+  },
+  "tfidf_logistic_regression": {
+    "validation_metrics": {
+      "accuracy": 0.8581,
+      "macro_f1": 0.7743,
+      "weighted_f1": 0.8535,
+      "per_class": {
+        "delivery_status_tracking": {
+          "precision": 0.9259,
+          "recall": 0.9003,
+          "f1": 0.9129,
+          "support": 3720
+        },
+        "return_refund_exchange": {
+          "precision": 0.9417,
+          "recall": 0.7345,
+          "f1": 0.8253,
+          "support": 791
+        },
+        "damaged_defective_wrong_item": {
+          "precision": 0.988,
+          "recall": 0.6357,
+          "f1": 0.7736,
+          "support": 387
+        },
+        "order_cancellation_modification": {
+          "precision": 0.9862,
+          "recall": 0.702,
+          "f1": 0.8201,
+          "support": 406
+        },
+        "payment_billing_promotions": {
+          "precision": 0.9291,
+          "recall": 0.6553,
+          "f1": 0.7685,
+          "support": 760
+        },
+        "prime_digital_services": {
+          "precision": 0.9042,
+          "recall": 0.6318,
+          "f1": 0.7438,
+          "support": 717
+        },
+        "account_access_security": {
+          "precision": 0.9588,
+          "recall": 0.5225,
+          "f1": 0.6764,
+          "support": 178
+        },
+        "product_seller_inquiry": {
+          "precision": 0.8889,
+          "recall": 0.3636,
+          "f1": 0.5161,
+          "support": 110
+        },
+        "feedback_complaint_chatter": {
+          "precision": 0.8621,
+          "recall": 0.8103,
+          "f1": 0.8354,
+          "support": 949
+        },
+        "other_unclear": {
+          "precision": 0.7783,
+          "recall": 0.9881,
+          "f1": 0.8707,
+          "support": 4359
+        }
+      },
+      "confusion_matrix": [
+        [
+          3349,
+          1,
+          2,
+          0,
+          0,
+          7,
+          0,
+          1,
+          30,
+          330
+        ],
+        [
+          53,
+          581,
+          0,
+          0,
+          17,
+          6,
+          1,
+          0,
+          25,
+          108
+        ],
+        [
+          45,
+          25,
+          246,
+          4,
+          2,
+          3,
+          0,
+          2,
+          8,
+          52
+        ],
+        [
+          42,
+          8,
+          0,
+          285,
+          11,
+          1,
+          2,
+          0,
+          12,
+          45
+        ],
+        [
+          56,
+          0,
+          0,
+          0,
+          498,
+          14,
+          1,
+          1,
+          12,
+          178
+        ],
+        [
+          6,
+          0,
+          0,
+          0,
+          1,
+          453,
+          0,
+          0,
+          11,
+          246
+        ],
+        [
+          4,
+          0,
+          0,
+          0,
+          1,
+          7,
+          93,
+          1,
+          11,
+          61
+        ],
+        [
+          8,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          40,
+          12,
+          50
+        ],
+        [
+          21,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          769,
+          157
+        ],
+        [
+          33,
+          2,
+          1,
+          0,
+          4,
+          10,
+          0,
+          0,
+          2,
+          4307
+        ]
+      ]
+    },
+    "test_metrics": {
+      "accuracy": 0.8612,
+      "macro_f1": 0.786,
+      "weighted_f1": 0.8573,
+      "per_class": {
+        "delivery_status_tracking": {
+          "precision": 0.9307,
+          "recall": 0.8993,
+          "f1": 0.9148,
+          "support": 3646
+        },
+        "return_refund_exchange": {
+          "precision": 0.944,
+          "recall": 0.7367,
+          "f1": 0.8276,
+          "support": 847
+        },
+        "damaged_defective_wrong_item": {
+          "precision": 0.9838,
+          "recall": 0.6925,
+          "f1": 0.8128,
+          "support": 439
+        },
+        "order_cancellation_modification": {
+          "precision": 0.9821,
+          "recall": 0.7256,
+          "f1": 0.8346,
+          "support": 379
+        },
+        "payment_billing_promotions": {
+          "precision": 0.9394,
+          "recall": 0.6539,
+          "f1": 0.7711,
+          "support": 783
+        },
+        "prime_digital_services": {
+          "precision": 0.9291,
+          "recall": 0.6467,
+          "f1": 0.7626,
+          "support": 750
+        },
+        "account_access_security": {
+          "precision": 0.8824,
+          "recall": 0.5172,
+          "f1": 0.6522,
+          "support": 145
+        },
+        "product_seller_inquiry": {
+          "precision": 0.9231,
+          "recall": 0.4068,
+          "f1": 0.5647,
+          "support": 118
+        },
+        "feedback_complaint_chatter": {
+          "precision": 0.8736,
+          "recall": 0.8268,
+          "f1": 0.8496,
+          "support": 970
+        },
+        "other_unclear": {
+          "precision": 0.7762,
+          "recall": 0.9895,
+          "f1": 0.87,
+          "support": 4301
+        }
+      },
+      "confusion_matrix": [
+        [
+          3279,
+          0,
+          1,
+          0,
+          1,
+          12,
+          0,
+          0,
+          23,
+          330
+        ],
+        [
+          64,
+          624,
+          0,
+          0,
+          16,
+          5,
+          1,
+          1,
+          21,
+          115
+        ],
+        [
+          27,
+          26,
+          304,
+          5,
+          5,
+          3,
+          1,
+          0,
+          10,
+          58
+        ],
+        [
+          29,
+          9,
+          0,
+          275,
+          4,
+          5,
+          2,
+          0,
+          5,
+          50
+        ],
+        [
+          51,
+          0,
+          0,
+          0,
+          512,
+          7,
+          5,
+          2,
+          16,
+          190
+        ],
+        [
+          7,
+          0,
+          0,
+          0,
+          2,
+          485,
+          0,
+          0,
+          19,
+          237
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          75,
+          1,
+          9,
+          57
+        ],
+        [
+          10,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          48,
+          10,
+          49
+        ],
+        [
+          23,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          802,
+          141
+        ],
+        [
+          33,
+          1,
+          2,
+          0,
+          3,
+          2,
+          1,
+          0,
+          3,
+          4256
+        ]
+      ]
+    }
+  },
+  "error_analysis": [
+    {
+      "conversation_id": 304621,
+      "turn_index": 1,
+      "customer_message": "@115850 how do we reach customer care for an order someone didnt place but received it. Not his ID is used to place order. Can u help pls.",
+      "true_development_label": "delivery_status_tracking",
+      "predicted_label": "other_unclear",
+      "diagnostic_reason": "Lexical overlap between 'delivery_status_tracking' and 'other_unclear' tokens in customer message."
+    },
+    {
+      "conversation_id": 2287321,
+      "turn_index": 1,
+      "customer_message": "Why do I need to learn about returning a package I did not receive? I just want to know why it wasn't delivered on time. @115821 https://t.co/3CIaZFWhxc",
+      "true_development_label": "return_refund_exchange",
+      "predicted_label": "delivery_status_tracking",
+      "diagnostic_reason": "Customer requested refund due to delivery delay; logistics keywords outweighed refund request."
+    },
+    {
+      "conversation_id": 248700,
+      "turn_index": 1,
+      "customer_message": "Fuck you @115850 , when I was looted by your seller by sending a defected laptop and refusing to send me a new product by saying 1/n",
+      "true_development_label": "product_seller_inquiry",
+      "predicted_label": "other_unclear",
+      "diagnostic_reason": "Informal phrasing of pre-purchase question without explicit keyword markers."
+    },
+    {
+      "conversation_id": 331275,
+      "turn_index": 1,
+      "customer_message": "@AmazonHelp is it duplicate or counterfeit from Sparx #diwalioffer makes India fool @118702 @4030 https://t.co/4n11hbCGHo",
+      "true_development_label": "damaged_defective_wrong_item",
+      "predicted_label": "other_unclear",
+      "diagnostic_reason": "Lexical overlap between 'damaged_defective_wrong_item' and 'other_unclear' tokens in customer message."
+    },
+    {
+      "conversation_id": 2627629,
+      "turn_index": 1,
+      "customer_message": "Y todo esto sin engentarme en centros comerciales, porque pues @116875 es genial 😍❤️ #BuenFin2017",
+      "true_development_label": "feedback_complaint_chatter",
+      "predicted_label": "other_unclear",
+      "diagnostic_reason": "Vague expression of brand frustration or social chatter lacking specific keywords."
+    },
+    {
+      "conversation_id": 2573806,
+      "turn_index": 1,
+      "customer_message": "@116875 me podrían ayudar con un reembolso de un pedido por favor ?",
+      "true_development_label": "return_refund_exchange",
+      "predicted_label": "other_unclear",
+      "diagnostic_reason": "Lexical overlap between 'return_refund_exchange' and 'other_unclear' tokens in customer message."
+    },
+    {
+      "conversation_id": 149290,
+      "turn_index": 1,
+      "customer_message": "Haciendo cuentas para ver que me puedo comprar en el #BlackFridayEnAmazon 🤔@116875 https://t.co/44E9CXlhm8",
+      "true_development_label": "account_access_security",
+      "predicted_label": "other_unclear",
+      "diagnostic_reason": "Non-English or rare account lock vocabulary not captured strongly in TF-IDF unigrams."
+    },
+    {
+      "conversation_id": 2859970,
+      "turn_index": 1,
+      "customer_message": "Meanwhile I have $15 in @117795 credits that are useless because even their own customer service reps don't know how they work... Everything online says \"automatically applied\" but the email from cust",
+      "true_development_label": "payment_billing_promotions",
+      "predicted_label": "feedback_complaint_chatter",
+      "diagnostic_reason": "Lexical overlap between 'payment_billing_promotions' and 'feedback_complaint_chatter' tokens in customer message."
+    },
+    {
+      "conversation_id": 2928903,
+      "turn_index": 1,
+      "customer_message": "Amazonからのショートメールに焦ってたお昼。\n調べてみたら、やっぱり架空請求だったみたいです。\nそりゃそうだ。見に覚えないし…",
+      "true_development_label": "payment_billing_promotions",
+      "predicted_label": "other_unclear",
+      "diagnostic_reason": "Lexical overlap between 'payment_billing_promotions' and 'other_unclear' tokens in customer message."
+    },
+    {
+      "conversation_id": 2600198,
+      "turn_index": 1,
+      "customer_message": "Amongst the best experiences I have had in my life is one where I sent vegetable garden seeds by @115850 to people marginal farmers in rural Bihar. The whole experience for sender and recipient is min",
+      "true_development_label": "delivery_status_tracking",
+      "predicted_label": "feedback_complaint_chatter",
+      "diagnostic_reason": "Lexical overlap between 'delivery_status_tracking' and 'feedback_complaint_chatter' tokens in customer message."
+    },
+    {
+      "conversation_id": 2669954,
+      "turn_index": 1,
+      "customer_message": "あんハピがいつでも観れるプライムビデオ最高。入り直してよかったAmazonプライム。",
+      "true_development_label": "prime_digital_services",
+      "predicted_label": "other_unclear",
+      "diagnostic_reason": "Lexical overlap between 'prime_digital_services' and 'other_unclear' tokens in customer message."
+    },
+    {
+      "conversation_id": 2401238,
+      "turn_index": 1,
+      "customer_message": "@115830 how come my Listen Without Prejudice 25 is released today yet my order is due on the 24th Oct? 203-3644993-1647508",
+      "true_development_label": "other_unclear",
+      "predicted_label": "delivery_status_tracking",
+      "diagnostic_reason": "Message contained words resembling an intent (e.g., 'help', 'order') but lacked full ticket context."
+    }
+  ]
+}

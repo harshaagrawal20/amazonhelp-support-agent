@@ -1,0 +1,87 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ── Virtual Environment ───────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Environment / Secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Large raw / bulk dataset files (not committed; reproduced via download) ────
+data/raw/*.csv
+data/raw/*.zip
+data/raw/*.tar.gz
+# All raw CSVs anywhere
+*.csv
+!results/*.csv
+!data/golden/*.csv
+
+# ── Large processed datasets (reproduced by build_amazonhelp_dataset.py) ──────
+# Bulk conversation files (>50 MB each — too large for git)
+data/processed/amazonhelp_conversations.jsonl
+data/processed/amazonhelp_train.jsonl
+data/processed/amazonhelp_val.jsonl
+data/processed/amazonhelp_test.jsonl
+# Dev splits (~9–42 MB each) — regenerated locally; not committed to keep repo lightweight
+data/processed/amazonhelp_dev_train.jsonl
+data/processed/amazonhelp_dev_val.jsonl
+data/processed/amazonhelp_dev_test.jsonl
+
+# ── Other large/binary data formats ──────────────────────────────────────────
+*.zip
+*.tar.gz
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.parquet
+
+# ── Evaluation artifacts — COMMITTED (required for submission) ────────────────
+# Explicitly unignore required evaluation JSONL files
+!data/golden/*.jsonl
+!outputs/golden_predictions.jsonl
+!results/golden_reply_judgments.jsonl
+
+# ── Quarantine / backup / superseded files — NOT committed ───────────────────
+results/invalid_quarantine/
+data/golden/human_reply_annotations_invalid_backup.jsonl
+
+# ── IDE / OS ──────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Testing / Coverage ────────────────────────────────────────────────────────
+.pytest_cache/
+.pytest_tmp/
+.coverage
+.coverage.*
+htmlcov/

@@ -1,0 +1,177 @@
+{
+  "checks": {
+    "check_09_valid_jsonl": {
+      "status": "PASS",
+      "details": "Successfully parsed 200 JSON lines from golden_predictions.jsonl"
+    },
+    "check_01_exact_200_records": {
+      "status": "PASS",
+      "details": "Found 200 records (expected 200)"
+    },
+    "check_02_all_golden_ids_present": {
+      "status": "PASS",
+      "details": "All gold_001 through gold_200 present"
+    },
+    "check_03_no_duplicate_golden_ids": {
+      "status": "PASS",
+      "details": "No duplicates"
+    },
+    "check_04_non_empty_reply_and_evidence": {
+      "status": "FAIL",
+      "details": {
+        "non_empty_pred_replies": "200/200",
+        "non_empty_retrieved_examples": "177/200",
+        "empty_replies_count": 0,
+        "empty_evidence_count": 23,
+        "empty_evidence_ids": [
+          "gold_017",
+          "gold_036",
+          "gold_045",
+          "gold_051",
+          "gold_053",
+          "gold_080",
+          "gold_082",
+          "gold_093",
+          "gold_112",
+          "gold_116",
+          "gold_119",
+          "gold_123",
+          "gold_126",
+          "gold_129",
+          "gold_133",
+          "gold_136",
+          "gold_147",
+          "gold_152",
+          "gold_154",
+          "gold_163",
+          "gold_178",
+          "gold_180",
+          "gold_200"
+        ]
+      }
+    },
+    "check_05_valid_retrieved_examples_structure": {
+      "status": "PASS",
+      "details": "Validated 531 evidence items across 177 records. Issues: 0",
+      "issues": []
+    },
+    "check_06_retrieval_evidence_train_only": {
+      "status": "PASS",
+      "details": "All 531 evidence items confirmed in train partition",
+      "non_train_evidence": []
+    },
+    "check_07_zero_leakage": {
+      "status": "PASS",
+      "details": "Zero leakage detected across Golden, Val, and Test sets"
+    },
+    "check_08_no_secret_leaks": {
+      "status": "PASS",
+      "details": "No API keys, tokens, or secrets detected in file"
+    },
+    "check_10_length_statistics": {
+      "status": "PASS",
+      "details": "Chars: min=45, max=477, mean=234.97, median=231.0"
+    },
+    "check_11_similarity_statistics": {
+      "status": "PASS",
+      "details": "Scores: count=531, min=0.164, max=1.0, mean=0.3468, median=0.3119"
+    },
+    "check_12_no_suspicious_replies": {
+      "status": "PASS",
+      "details": "0 suspicious replies detected"
+    },
+    "check_13_no_duplicate_replies": {
+      "status": "PASS",
+      "details": "All generated replies are unique (0 duplicates)"
+    },
+    "check_14_near_copy_analysis": {
+      "status": "PASS",
+      "details": "Detected 6 standard template near-copies (> 0.85 similarity ratio)"
+    }
+  },
+  "summary": {
+    "total_records": 200,
+    "valid_generated_replies": 200,
+    "invalid_or_missing_replies": 0,
+    "evidence_coverage": "177/200",
+    "empty_evidence_count": 23,
+    "total_checks": 14,
+    "passed_checks": 13,
+    "failed_checks": [
+      "check_04_non_empty_reply_and_evidence"
+    ],
+    "leakage_count": 0,
+    "duplicate_reply_count": 0,
+    "suspicious_reply_count": 0,
+    "near_copy_count": 6,
+    "ready_for_judge": true
+  },
+  "statistics": {
+    "reply_length_chars": {
+      "min": 45,
+      "max": 477,
+      "mean": 234.97,
+      "median": 231.0
+    },
+    "reply_length_words": {
+      "min": 2,
+      "max": 75,
+      "mean": 33.49,
+      "median": 35.5
+    },
+    "retrieval_similarity": {
+      "count": 531,
+      "min": 0.164,
+      "max": 1.0,
+      "mean": 0.3468,
+      "median": 0.3119
+    }
+  },
+  "suspicious_replies": [],
+  "duplicate_replies": [],
+  "suspicious_near_copies": [
+    {
+      "golden_id": "gold_007",
+      "evidence_index": 0,
+      "similarity_ratio": 0.9115,
+      "generated_reply": "@116928 Hola, lamentamos el retraso en la entrega de tu paquete. ¿Has contactado con el transportista para conocer el motivo del retraso? En el siguiente enlace podrás encontrar más información sobre cómo ponerte en contacto con ellos: https://t.co/meqnr4QIaC ^RC",
+      "historical_response": "@233682 Hola Soun, lamentamos el retraso en la entrega de tu paquete. ¿Has contactado con el transportista para conocer el motivo del retraso? En el siguiente enlace podras encontrar mas informacion sobre como ponerte en contacto con ellos: https://t.co/meqnr4QIaC ^RC"
+    },
+    {
+      "golden_id": "gold_018",
+      "evidence_index": 0,
+      "similarity_ratio": 0.898,
+      "generated_reply": "Bonjour, nous vous avons répondu par DM. ^ARC",
+      "historical_response": "@124406 Bonjour, nous vous avons répondu par DM.\n^ARC"
+    },
+    {
+      "golden_id": "gold_043",
+      "evidence_index": 0,
+      "similarity_ratio": 0.9372,
+      "generated_reply": "@251150 We've received your details. We'll get in touch with you at the earliest. Appreciate your understanding. ^HD",
+      "historical_response": "@218628 We've received your details, Rahul. We'll get in touch with you at the earliest. Appreciate your understanding. ^HD"
+    },
+    {
+      "golden_id": "gold_086",
+      "evidence_index": 2,
+      "similarity_ratio": 0.959,
+      "generated_reply": "@115821 Thanks for sharing! I've forwarded your message along to our Customer Service team who will love to hear this. ^GG",
+      "historical_response": "@373247 Thanks for sharing! I've forwarded your message along to our Customer Service team who will love to hear this. ^GG"
+    },
+    {
+      "golden_id": "gold_140",
+      "evidence_index": 2,
+      "similarity_ratio": 0.9701,
+      "generated_reply": "We're happy to help! You can reach out via phone or chat here: https://t.co/hApLpMlfHN and we can take a closer look together. ^MT",
+      "historical_response": "@803609 We're happy to help! You can reach out via phone or chat here: https://t.co/hApLpMlfHN and we can take a closer look together. ^MT"
+    },
+    {
+      "golden_id": "gold_194",
+      "evidence_index": 0,
+      "similarity_ratio": 0.9688,
+      "generated_reply": "@116928 Hola, sin ningún problema puedes contactarnos por un DM. Por otro lado te recordamos no compartir información sensible de tu cuenta como números de pedido por redes sociales, aún por mensajes privados. Si lo deseas también puedes hacernos tu consulta aquí. ^MZ",
+      "historical_response": "@137875 Hola Leonardo, sin ningún problema puedes contactarnos por un DM. Por otro lado te recordamos no compartir información sensible de tu cuenta como números de pedido por redes sociales, aún por mensajes privados. Si lo deseas también puedes hacernos tu consulta aquí. ^MZ"
+    }
+  ],
+  "leakage_incidents": []
+}

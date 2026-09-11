@@ -1,0 +1,305 @@
+{
+  "status": "COMPLETE",
+  "completed_count": 50,
+  "total_target": 50,
+  "dimensions": {
+    "correctness": {
+      "n": 50,
+      "exact_agreement_pct": 70.0,
+      "weighted_cohen_kappa": 0.615,
+      "spearman_correlation": 0.532,
+      "mean_absolute_difference": 0.46,
+      "human_mean": 4.5,
+      "llm_mean": 4.28
+    },
+    "relevance": {
+      "n": 50,
+      "exact_agreement_pct": 78.0,
+      "weighted_cohen_kappa": 0.33,
+      "spearman_correlation": 0.363,
+      "mean_absolute_difference": 0.38,
+      "human_mean": 4.78,
+      "llm_mean": 4.6
+    },
+    "historical_grounding": {
+      "n": 50,
+      "exact_agreement_pct": 58.0,
+      "weighted_cohen_kappa": 0.474,
+      "spearman_correlation": 0.346,
+      "mean_absolute_difference": 0.44,
+      "human_mean": 4.46,
+      "llm_mean": 4.78
+    },
+    "helpfulness": {
+      "n": 50,
+      "exact_agreement_pct": 64.0,
+      "weighted_cohen_kappa": 0.562,
+      "spearman_correlation": 0.487,
+      "mean_absolute_difference": 0.46,
+      "human_mean": 4.36,
+      "llm_mean": 4.38
+    },
+    "unsupported_claims": {
+      "n": 50,
+      "exact_agreement_pct": 100.0,
+      "weighted_cohen_kappa": 1.0,
+      "spearman_correlation": 1.0,
+      "mean_absolute_difference": 0.0,
+      "human_mean": 4.78,
+      "llm_mean": 4.78
+    },
+    "escalation_appropriateness": {
+      "n": 50,
+      "exact_agreement_pct": 70.0,
+      "weighted_cohen_kappa": 0.501,
+      "spearman_correlation": 0.722,
+      "mean_absolute_difference": 0.46,
+      "human_mean": 4.62,
+      "llm_mean": 4.4
+    }
+  },
+  "overall_score": {
+    "n": 50,
+    "exact_agreement_pct": 72.0,
+    "weighted_cohen_kappa": 0.7,
+    "spearman_correlation": 0.594,
+    "mean_absolute_difference": 0.294,
+    "human_mean": 4.583,
+    "llm_mean": 4.537
+  },
+  "decision": {
+    "exact_agreement_pct": 76.0,
+    "cohen_kappa": 0.306,
+    "confusion_matrix": {
+      "labels": [
+        "pass",
+        "borderline",
+        "fail"
+      ],
+      "matrix": [
+        [
+          34,
+          10,
+          0
+        ],
+        [
+          2,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          2
+        ]
+      ],
+      "format": "rows = human, columns = llm_judge"
+    }
+  },
+  "by_intent": {
+    "account_access_security": {
+      "count": 3,
+      "close_agreement_pct": 100.0,
+      "human_mean": 4.89,
+      "llm_mean": 4.94
+    },
+    "damaged_defective_wrong_item": {
+      "count": 5,
+      "close_agreement_pct": 100.0,
+      "human_mean": 5.0,
+      "llm_mean": 4.97
+    },
+    "delivery_status_tracking": {
+      "count": 8,
+      "close_agreement_pct": 87.5,
+      "human_mean": 4.67,
+      "llm_mean": 4.48
+    },
+    "feedback_complaint_chatter": {
+      "count": 7,
+      "close_agreement_pct": 85.7,
+      "human_mean": 4.69,
+      "llm_mean": 4.52
+    },
+    "order_cancellation_modification": {
+      "count": 3,
+      "close_agreement_pct": 100.0,
+      "human_mean": 4.83,
+      "llm_mean": 4.78
+    },
+    "other_unclear": {
+      "count": 7,
+      "close_agreement_pct": 57.1,
+      "human_mean": 4.24,
+      "llm_mean": 4.33
+    },
+    "payment_billing_promotions": {
+      "count": 6,
+      "close_agreement_pct": 83.3,
+      "human_mean": 4.22,
+      "llm_mean": 4.11
+    },
+    "prime_digital_services": {
+      "count": 3,
+      "close_agreement_pct": 66.7,
+      "human_mean": 4.17,
+      "llm_mean": 4.56
+    },
+    "product_seller_inquiry": {
+      "count": 3,
+      "close_agreement_pct": 66.7,
+      "human_mean": 4.67,
+      "llm_mean": 4.78
+    },
+    "return_refund_exchange": {
+      "count": 5,
+      "close_agreement_pct": 80.0,
+      "human_mean": 4.67,
+      "llm_mean": 4.47
+    }
+  },
+  "by_escalation": {
+    "auto_handle": {
+      "count": 26,
+      "mae": 0.32,
+      "human_mean": 4.51,
+      "llm_mean": 4.47
+    },
+    "escalate": {
+      "count": 21,
+      "mae": 0.24,
+      "human_mean": 4.69,
+      "llm_mean": 4.58
+    },
+    "unclear": {
+      "count": 3,
+      "mae": 0.447,
+      "human_mean": 4.5,
+      "llm_mean": 4.83
+    }
+  },
+  "by_retrieval_presence": {
+    "with_retrieval": {
+      "count": 44,
+      "mae": 0.319,
+      "human_mean": 4.54,
+      "llm_mean": 4.47
+    },
+    "without_retrieval": {
+      "count": 6,
+      "mae": 0.112,
+      "human_mean": 4.89,
+      "llm_mean": 5.0
+    }
+  },
+  "major_disagreements": [
+    {
+      "golden_id": "gold_009",
+      "human_overall": 4.33,
+      "llm_overall": 4.5,
+      "human_decision": "pass",
+      "llm_decision": "borderline",
+      "human_notes": null,
+      "pred_reply": "@153395 I'm so sorry for the frustration and lack of communication. Please check the latest tracking status here: https://t.co/Y5jpI9gRhE. If it shows as delivered to the depot, you may need to contact Royal Mail directly for further details on the delay. ^AX"
+    },
+    {
+      "golden_id": "gold_023",
+      "human_overall": 3.67,
+      "llm_overall": 4.17,
+      "human_decision": "borderline",
+      "llm_decision": "pass",
+      "human_notes": null,
+      "pred_reply": "@115850 We're glad to hear the refund process was quick! Since you received an empty box, please contact us via Phone or Chat: https://t.co/Q7Ftz6nj80 so our team can assist you further with your account. ^FR"
+    },
+    {
+      "golden_id": "gold_048",
+      "human_overall": 4.0,
+      "llm_overall": 3.67,
+      "human_decision": "pass",
+      "llm_decision": "borderline",
+      "human_notes": null,
+      "pred_reply": "@271704 We’re sorry for the delay and the confusion with the updated ETA. We strive to deliver by the date provided. If your order does not arrive by the new estimated date of November 25, please let us know. ^CH"
+    },
+    {
+      "golden_id": "gold_062",
+      "human_overall": 4.17,
+      "llm_overall": 4.0,
+      "human_decision": "pass",
+      "llm_decision": "borderline",
+      "human_notes": null,
+      "pred_reply": "Hi there, thanks for reaching out! We're sorry for the confusion regarding Pass My Parcel availability. To check the specific options and fees for your area, please review the details here: https://t.co/E6PBNYlsiO. Let us know if you have any other questions!"
+    },
+    {
+      "golden_id": "gold_071",
+      "human_overall": 3.5,
+      "llm_overall": 4.67,
+      "human_decision": "borderline",
+      "llm_decision": "pass",
+      "human_notes": null,
+      "pred_reply": "@115850 We understand your concern. To verify if this is a legitimate Amazon offer, please check our guide on identifying official Amazon emails and messages: https://t.co/kho3jYW5DH Let us know if you have any further questions!"
+    },
+    {
+      "golden_id": "gold_079",
+      "human_overall": 5.0,
+      "llm_overall": 3.5,
+      "human_decision": "pass",
+      "llm_decision": "borderline",
+      "human_notes": null,
+      "pred_reply": "@116316 Das freut uns sehr! Wir sind zwar ein Team und keine einzelne Person, aber wir freuen uns immer über nette Nachrichten. 😊 Liebe Grüße ^BL"
+    },
+    {
+      "golden_id": "gold_117",
+      "human_overall": 4.83,
+      "llm_overall": 3.33,
+      "human_decision": "pass",
+      "llm_decision": "borderline",
+      "human_notes": null,
+      "pred_reply": "@116316 Danke für dein Feedback! Wir freuen uns über jede ehrliche Meinung. Falls du mit einem bestimmten Produkt unzufrieden bist, hilft dir unser Kundenservice gerne weiter: https://t.co/YuPK6dhEDG ^BL"
+    },
+    {
+      "golden_id": "gold_134",
+      "human_overall": 4.67,
+      "llm_overall": 4.33,
+      "human_decision": "pass",
+      "llm_decision": "borderline",
+      "human_notes": null,
+      "pred_reply": "We're sorry to hear you're having trouble cancelling your product. Could you please share a bit more detail about the specific issue or error message you're seeing? This will help us guide you to the right solution. ^PJ"
+    },
+    {
+      "golden_id": "gold_141",
+      "human_overall": 4.67,
+      "llm_overall": 4.5,
+      "human_decision": "pass",
+      "llm_decision": "borderline",
+      "human_notes": null,
+      "pred_reply": "Hi there. We're sorry for the delay. You can check the current status and estimated delivery date for your order here: https://t.co/aaDyEz1VgE ^DA"
+    },
+    {
+      "golden_id": "gold_155",
+      "human_overall": 5.0,
+      "llm_overall": 3.83,
+      "human_decision": "pass",
+      "llm_decision": "borderline",
+      "human_notes": null,
+      "pred_reply": "@115821 We are truly sorry to hear about your frustrating experience with the delivery and your membership. To assist you further and look into this specific issue, please contact us directly through the secure chat on your Amazon account or via the Help page. We appreciate your feedback and hope to make this right. ^KM"
+    },
+    {
+      "golden_id": "gold_174",
+      "human_overall": 5.0,
+      "llm_overall": 3.5,
+      "human_decision": "pass",
+      "llm_decision": "borderline",
+      "human_notes": null,
+      "pred_reply": "@745930 Thank you for sharing your details. We will look into this and get back to you shortly. ^GK"
+    },
+    {
+      "golden_id": "gold_199",
+      "human_overall": 4.83,
+      "llm_overall": 3.67,
+      "human_decision": "pass",
+      "llm_decision": "borderline",
+      "human_notes": null,
+      "pred_reply": "@821368 We're sorry to hear about the trouble with the product page and your recent experience. To investigate the issue and assist you further, please share the details via our secure support link: https://t.co/beaaDm0muc"
+    }
+  ]
+}
