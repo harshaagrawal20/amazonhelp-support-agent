@@ -79,6 +79,30 @@ cp .env.example .env
 
 ---
 
+## ⚡ Quick Reproduction Guide: Headline Results in < 15 Minutes
+
+Reviewers can independently reproduce and verify all core claims, benchmarks, and agreement statistics in **under 15 minutes** using the included frozen evaluation artifacts:
+
+```bash
+# Step 1: Run all automated unit tests & pipeline integrity invariants (~30s)
+pytest
+
+# Step 2: Reproduce Candidate D's Frozen 200 Golden Set Benchmark (~2m)
+# Validates 57.00% accuracy & 0.5971 Macro-F1 (+18.50% over baseline)
+python scripts/evaluate_intent_models_golden.py
+
+# Step 3: Reproduce Human-vs-LLM Judge Agreement Analysis (~5s)
+# Validates 50/50 manual provenance, 0.700 Weighted Kappa, 76% decision agreement
+python scripts/compare_human_llm_judge.py
+
+# Step 4: Verify 14 Invariant Schema & Quality Checks on 200 Generated Replies (~5s)
+python scripts/validate_golden_replies.py
+```
+
+*Note: To rebuild the full multi-turn conversation dataset from scratch using raw Kaggle tweets (optional, ~10-12 mins), follow the data pipeline steps below.*
+
+---
+
 ## How to Download the Dataset
 
 The raw dataset is downloaded programmatically using `kagglehub`. It caches the file locally in the standard KaggleHub cache and saves an absolute path pointer to `data/raw/dataset_location.txt`, keeping the Git repository lightweight.
